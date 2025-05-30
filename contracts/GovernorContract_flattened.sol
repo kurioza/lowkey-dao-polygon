@@ -343,6 +343,15 @@ abstract contract Governor is Context, ERC165, IGovernor {
         return _proposals[proposalId].proposer;
     }
 
+    function proposalThreshold()
+        public
+        view
+        override(GovernorSettings)
+        returns (uint256)
+    {
+        return super.proposalThreshold();
+    }
+
     function propose(
         address[] memory targets,
         uint256[] memory values,
@@ -728,7 +737,6 @@ abstract contract ERC20Votes is IVotes {
     function getPastVotes(address account, uint256 blockNumber) public view virtual override returns (uint256);
     function getPastTotalSupply(uint256 blockNumber) public view virtual override returns (uint256);
 }
-
 // File: GovernorContract.sol
 
 contract GovernorContract is
@@ -823,15 +831,6 @@ contract GovernorContract is
         returns (uint256)
     {
         return super.votingPeriod();
-    }
-
-    function proposalThreshold()
-        public
-        view
-        override(Governor, GovernorSettings)
-        returns (uint256)
-    {
-        return super.proposalThreshold();
     }
 
     function quorum(uint256 blockNumber)
