@@ -17,7 +17,22 @@ abstract contract Context {
 
 library Address {
     function isContract(address account) internal view returns (bool) {
+        // Solidity 0.8.xでは .code.length が安全
         return account.code.length > 0;
+    }
+
+    function functionCallWithValue(
+        address target,
+        bytes memory data,
+        uint256 value
+    ) internal returns (bytes memory) {
+        require(address(this).balance >= value, "Address: insufficient balance for call");
+        require(isContract(target), "Address: call to non-contract");
+
+        (bool success, bytes memory returndata) = target.call{value: value}(data);
+        require(success, "Address: low-level call with value failed");
+
+        return returndata;
     }
 
     function functionCall(
@@ -47,6 +62,7 @@ library Address {
 
     function _revert(bytes memory returndata, string memory errorMessage) private pure {
         if (returndata.length > 0) {
+            /// @solidity memory-safe-assembly
             assembly {
                 let returndata_size := mload(returndata)
                 revert(add(32, returndata), returndata_size)
@@ -56,6 +72,7 @@ library Address {
         }
     }
 }
+
 // File: contracts/utils/math/SafeCast.sol
 
 library SafeCast {
@@ -811,7 +828,7 @@ contract GovernorContract is
     function proposalThreshold()
         public
         view
-        override(GovernorSettings)
+        override(Governor, GovernorSettings)
         returns (uint256)
     {
         return super.proposalThreshold();
