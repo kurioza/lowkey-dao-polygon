@@ -343,13 +343,10 @@ abstract contract Governor is Context, ERC165, IGovernor {
         return _proposals[proposalId].proposer;
     }
 
-    function proposalThreshold()
-        public
-        view
-        override(GovernorSettings)
-        returns (uint256)
-    {
-        return super.proposalThreshold();
+    /// @notice Base placeholder for proposalThreshold()
+    /// @dev This is overridden in GovernorSettings
+    function proposalThreshold() public view virtual returns (uint256) {
+        return 0;
     }
 
     function propose(
@@ -815,6 +812,15 @@ contract GovernorContract is
         revert("Not implemented");
     }
 
+    function proposalThreshold()
+        public
+        view
+        override(Governor, GovernorSettings)
+        returns (uint256)
+    {
+        return super.proposalThreshold();
+    }
+
     function votingDelay()
         public
         view
@@ -912,7 +918,7 @@ contract GovernorContract is
     function supportsInterface(bytes4 interfaceId)
         public
         view
-        override(Governor, GovernorTimelockControl)
+        override(Governor)
         returns (bool)
     {
         return super.supportsInterface(interfaceId);
