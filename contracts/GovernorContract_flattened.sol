@@ -354,13 +354,19 @@ abstract contract Governor is Context, ERC165, IGovernor {
         return proposalId;
     }
 
-    // 👇 abstract メソッド（継承先で実装）
     function _quorumReached(uint256 proposalId) internal view virtual returns (bool);
     function _voteSucceeded(uint256 proposalId) internal view virtual returns (bool);
+
     function votingDelay() public view virtual override returns (uint256);
     function votingPeriod() public view virtual override returns (uint256);
-    function proposalThreshold() public view virtual override returns (uint256);
+
+    function proposalThreshold() public view virtual override(GovernorSettings) returns (uint256)
+    {
+    return super.proposalThreshold();
+    }
+
     function quorum(uint256 blockNumber) public view virtual override returns (uint256);
+
     function getVotesWithParams(address account, uint256 blockNumber, bytes memory)
         public
         view
@@ -730,8 +736,8 @@ contract GovernorContract is
         Governor("GovernorContract")
         GovernorSettings(
             1,          // votingDelay: 1 block
-            45818,      // votingPeriod: ~1 week (Ethereum block time ≈ 13.2s)
-            1000e18     // proposalThreshold: 1,000 FREQ (in wei)
+            45818,      // votingPeriod: ~1 week
+            1000e18     // proposalThreshold: 1,000 FREQ
         )
         GovernorVotes(_token)
         GovernorVotesQuorumFraction(4) // 4% quorum
@@ -792,7 +798,7 @@ contract GovernorContract is
     function votingDelay()
         public
         view
-        override
+        override(GovernorSettings)
         returns (uint256)
     {
         return super.votingDelay();
@@ -801,7 +807,7 @@ contract GovernorContract is
     function votingPeriod()
         public
         view
-        override
+        override(GovernorSettings)
         returns (uint256)
     {
         return super.votingPeriod();
@@ -810,7 +816,7 @@ contract GovernorContract is
     function proposalThreshold()
         public
         view
-        override
+        override(GovernorSettings)
         returns (uint256)
     {
         return super.proposalThreshold();
@@ -819,7 +825,7 @@ contract GovernorContract is
     function quorum(uint256 blockNumber)
         public
         view
-        override
+        override(GovernorVotesQuorumFraction)
         returns (uint256)
     {
         return super.quorum(blockNumber);
