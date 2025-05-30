@@ -901,13 +901,4 @@ contract GovernorContract is
     {
         return super.supportsInterface(interfaceId);
     }
-    function proposalThreshold()
-    public
-    view
-    override(GovernorSettings)
-    returns (uint256)
-    {
-    return GovernorSettings.proposalThreshold();
-    }
-
 }
