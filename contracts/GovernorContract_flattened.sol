@@ -519,7 +519,6 @@ abstract contract GovernorSettings is Governor {
 abstract contract GovernorCountingSimple is Governor {
     using SafeCast for uint256;
 
-    // ✅ IGovernor の ProposalVote を使う（再定義しない）
     mapping(uint256 => IGovernor.ProposalVote) private _proposalVotes;
 
     function COUNTING_MODE() public pure virtual override returns (string memory) {
@@ -902,4 +901,13 @@ contract GovernorContract is
     {
         return super.supportsInterface(interfaceId);
     }
+    function proposalThreshold()
+    public
+    view
+    override(GovernorSettings)
+    returns (uint256)
+    {
+    return GovernorSettings.proposalThreshold();
+    }
+
 }
