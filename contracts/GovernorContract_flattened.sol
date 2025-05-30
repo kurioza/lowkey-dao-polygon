@@ -361,11 +361,6 @@ abstract contract Governor is Context, ERC165, IGovernor {
     function votingDelay() public view virtual override returns (uint256);
     function votingPeriod() public view virtual override returns (uint256);
 
-    function proposalThreshold() public view override(GovernorSettings) returns (uint256) {
-    return super.proposalThreshold();
-    }
-
-
     function quorum(uint256 blockNumber) public view virtual override returns (uint256);
 
     function getVotesWithParams(address account, uint256 blockNumber, bytes memory)
@@ -817,7 +812,7 @@ contract GovernorContract is
     function proposalThreshold()
         public
         view
-        override(Governor, GovernorSettings)
+        override(GovernorSettings)
         returns (uint256)
     {
         return super.proposalThreshold();
