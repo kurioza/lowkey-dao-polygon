@@ -226,6 +226,7 @@ interface IGovernor is IERC165 {
 
 // File: contracts/governance/Governor.sol
 
+using Address for address;
 abstract contract Governor is Context, ERC165, IGovernor {
     using SafeCast for uint256;
     using Timers for Timers.BlockNumber;
@@ -360,10 +361,10 @@ abstract contract Governor is Context, ERC165, IGovernor {
     function votingDelay() public view virtual override returns (uint256);
     function votingPeriod() public view virtual override returns (uint256);
 
-    function proposalThreshold() public view virtual override(GovernorSettings) returns (uint256)
-    {
+    function proposalThreshold() public view override(GovernorSettings) returns (uint256) {
     return super.proposalThreshold();
     }
+
 
     function quorum(uint256 blockNumber) public view virtual override returns (uint256);
 
@@ -747,7 +748,7 @@ contract GovernorContract is
     function COUNTING_MODE()
         public
         pure
-        override(GovernorCountingSimple)
+        override(Governor, GovernorCountingSimple)
         returns (string memory)
     {
         return super.COUNTING_MODE();
@@ -756,7 +757,7 @@ contract GovernorContract is
     function hasVoted(uint256 proposalId, address account)
         public
         view
-        override(GovernorCountingSimple)
+        override(Governor, GovernorCountingSimple)
         returns (bool)
     {
         return super.hasVoted(proposalId, account);
@@ -798,7 +799,7 @@ contract GovernorContract is
     function votingDelay()
         public
         view
-        override(GovernorSettings)
+        override(Governor, GovernorSettings)
         returns (uint256)
     {
         return super.votingDelay();
@@ -807,7 +808,7 @@ contract GovernorContract is
     function votingPeriod()
         public
         view
-        override(GovernorSettings)
+        override(Governor, GovernorSettings)
         returns (uint256)
     {
         return super.votingPeriod();
@@ -816,7 +817,7 @@ contract GovernorContract is
     function proposalThreshold()
         public
         view
-        override(GovernorSettings)
+        override(Governor, GovernorSettings)
         returns (uint256)
     {
         return super.proposalThreshold();
@@ -825,7 +826,7 @@ contract GovernorContract is
     function quorum(uint256 blockNumber)
         public
         view
-        override(GovernorVotesQuorumFraction)
+        override(Governor, GovernorVotesQuorumFraction)
         returns (uint256)
     {
         return super.quorum(blockNumber);
@@ -834,7 +835,7 @@ contract GovernorContract is
     function state(uint256 proposalId)
         public
         view
-        override(GovernorTimelockControl)
+        override(Governor, GovernorTimelockControl)
         returns (ProposalState)
     {
         return super.state(proposalId);
@@ -843,7 +844,7 @@ contract GovernorContract is
     function proposalNeedsQueuing(uint256 proposalId)
         public
         view
-        override(GovernorTimelockControl)
+        override(Governor, GovernorTimelockControl)
         returns (bool)
     {
         return super.proposalNeedsQueuing(proposalId);
@@ -857,7 +858,7 @@ contract GovernorContract is
         bytes32 descriptionHash
     )
         internal
-        override(GovernorTimelockControl)
+        override(Governor, GovernorTimelockControl)
         returns (uint48)
     {
         return super._queueOperations(proposalId, targets, values, calldatas, descriptionHash);
@@ -871,7 +872,7 @@ contract GovernorContract is
         bytes32 descriptionHash
     )
         internal
-        override(GovernorTimelockControl)
+        override(Governor, GovernorTimelockControl)
     {
         super._executeOperations(proposalId, targets, values, calldatas, descriptionHash);
     }
@@ -883,7 +884,7 @@ contract GovernorContract is
         bytes32 descriptionHash
     )
         internal
-        override(GovernorTimelockControl)
+        override(Governor, GovernorTimelockControl)
         returns (uint256)
     {
         return super._cancel(targets, values, calldatas, descriptionHash);
@@ -892,7 +893,7 @@ contract GovernorContract is
     function _executor()
         internal
         view
-        override(GovernorTimelockControl)
+        override(Governor, GovernorTimelockControl)
         returns (address)
     {
         return super._executor();
@@ -901,7 +902,7 @@ contract GovernorContract is
     function supportsInterface(bytes4 interfaceId)
         public
         view
-        override(Governor)
+        override(Governor, GovernorTimelockControl)
         returns (bool)
     {
         return super.supportsInterface(interfaceId);
