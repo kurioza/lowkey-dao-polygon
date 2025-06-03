@@ -438,12 +438,12 @@
 				"inputs": [
 					{
 						"internalType": "uint256",
-						"name": "proposalId",
+						"name": "",
 						"type": "uint256"
 					},
 					{
 						"internalType": "address",
-						"name": "account",
+						"name": "",
 						"type": "address"
 					}
 				],
@@ -818,11 +818,11 @@
 	},
 	"sources": {
 		"contracts/GovernorContract_flattened.sol": {
-			"keccak256": "0xf23ca3caf3844bb95ebf757cc23ae5a3a4accfe677271d1da9eeecc2f973ee9a",
+			"keccak256": "0xe6db0fd06a5267e3b72a3e20374a56b15d851f07619c152f92a0a6c25ace7a79",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://396964fda88927b382ac24649b0433e7d8b3e4433e8c8b341e0bb3f4e77b1de7",
-				"dweb:/ipfs/QmbUiAMK5ZhpWhLN8wDdq5btwfB5ToMZXCGHBKaTz6jguo"
+				"bzz-raw://437f09b036f6a1765a11a63b34b6045471cc3aa618328f7bd2e9ca29809c286a",
+				"dweb:/ipfs/QmQ8fYtC7Kg6dTPhmMLbQWV3zz4ugCcN66kgSiFqRMfBug"
 			]
 		}
 	},

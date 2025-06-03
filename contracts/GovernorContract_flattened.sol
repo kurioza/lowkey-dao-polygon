@@ -169,7 +169,7 @@ library Timers {
         return timer._deadline <= block.number;
     }
 
-    function getDeadline(BlockNumber memory timer) internal view returns (uint64) {
+    function getDeadline(BlockNumber memory timer) internal pure returns (uint64) {
         return timer._deadline;
     }
 
@@ -407,7 +407,7 @@ abstract contract Governor is Context, ERC165, IGovernor {
         return getVotesWithParams(account, blockNumber, "");
     }
 
-    function hasVoted(uint256 proposalId, address account)
+    function hasVoted(uint256 /* proposalId */, address /* account */)
         public
         view
         virtual
@@ -671,26 +671,37 @@ abstract contract GovernorTimelockControl is Governor {
     }
 
     function _queueOperations(
-        uint256 proposalId,
+        uint256 /* proposalId */,
         address[] memory targets,
         uint256[] memory values,
         bytes[] memory calldatas,
         bytes32 descriptionHash
     ) internal virtual override returns (uint48) {
-        bytes32 operationId = _timelockOperationId(proposalId);
-        _timelock.scheduleBatch(targets, values, calldatas, bytes32(0), descriptionHash, _timelock.getMinDelay());
+        _timelock.scheduleBatch(
+            targets,
+            values,
+            calldatas,
+            bytes32(0),
+            descriptionHash,
+            _timelock.getMinDelay()
+        );
         return uint48(block.timestamp + _timelock.getMinDelay());
     }
 
     function _executeOperations(
-        uint256 proposalId,
+        uint256 /* proposalId */,
         address[] memory targets,
         uint256[] memory values,
         bytes[] memory calldatas,
         bytes32 descriptionHash
     ) internal virtual override {
-        bytes32 operationId = _timelockOperationId(proposalId);
-        _timelock.executeBatch{value: msg.value}(targets, values, calldatas, bytes32(0), descriptionHash);
+        _timelock.executeBatch{value: msg.value}(
+            targets,
+            values,
+            calldatas,
+            bytes32(0),
+            descriptionHash
+        );
     }
 
     function _cancel(
