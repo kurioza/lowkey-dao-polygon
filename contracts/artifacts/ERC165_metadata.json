@@ -1,0 +1,65 @@
+{
+	"compiler": {
+		"version": "0.8.20+commit.a1b79de6"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "bytes4",
+						"name": "interfaceId",
+						"type": "bytes4"
+					}
+				],
+				"name": "supportsInterface",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contracts/GovernorContract_flattened.sol": "ERC165"
+		},
+		"evmVersion": "shanghai",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"contracts/GovernorContract_flattened.sol": {
+			"keccak256": "0xf23ca3caf3844bb95ebf757cc23ae5a3a4accfe677271d1da9eeecc2f973ee9a",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://396964fda88927b382ac24649b0433e7d8b3e4433e8c8b341e0bb3f4e77b1de7",
+				"dweb:/ipfs/QmbUiAMK5ZhpWhLN8wDdq5btwfB5ToMZXCGHBKaTz6jguo"
+			]
+		}
+	},
+	"version": 1
+}

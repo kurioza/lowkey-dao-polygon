@@ -133,15 +133,19 @@ abstract contract ERC165 is IERC165 {
 // File: contracts/utils/Timers.sol
 
 library Timers {
+    struct Timer {
+        uint64 _deadline;
+    }
+
     struct Timestamp {
         uint64 _deadline;
     }
 
-    function isPending(Timestamp memory timer) internal pure returns (bool) {
+    function isPending(Timer memory timer) internal view returns (bool) {
         return timer._deadline > block.timestamp;
     }
 
-    function isExpired(Timestamp memory timer) internal pure returns (bool) {
+    function isExpired(Timer memory timer) internal view returns (bool) {
         return timer._deadline <= block.timestamp;
     }
 
